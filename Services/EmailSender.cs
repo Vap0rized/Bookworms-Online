@@ -37,7 +37,7 @@ namespace Bookworms_Online.Services
 
             if (!MailAddress.TryCreate(toEmail, out var toAddress))
             {
-                _logger.LogWarning("SMTP to address invalid: {To}", toEmail);
+                _logger.LogWarning("SMTP to address invalid.");
                 return false;
             }
 
@@ -100,7 +100,7 @@ namespace Bookworms_Online.Services
 
             if (!MailAddress.TryCreate(toEmail, out var toAddress))
             {
-                _logger.LogWarning("SMTP to address invalid: {To}", toEmail);
+                _logger.LogWarning("SMTP to address invalid.");
                 return false;
             }
 
