@@ -1,0 +1,37 @@
+@page
+@model Bookworms_Online.Pages.SessionConfirmModel
+@{
+    ViewData["Title"] = "Confirm New Login";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-sm-12 col-md-10 col-lg-5">
+            <h1 class="mb-3">Confirm New Login</h1>
+
+            @if (!string.IsNullOrWhiteSpace(Model.Message))
+            {
+                <div class="alert alert-info">@Model.Message</div>
+            }
+
+            <form method="post">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label class="form-label" asp-for="Input.Code">Confirmation Code</label>
+                    <input asp-for="Input.Code" class="form-control" inputmode="numeric" maxlength="6" data-filter="digits" data-max="6" />
+                    <span asp-validation-for="Input.Code" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Confirm Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

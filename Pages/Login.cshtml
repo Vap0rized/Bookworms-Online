@@ -1,0 +1,55 @@
+@page
+@model Bookworms_Online.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-sm-12 col-md-12 col-lg-4">
+            <h1 class="mb-3">Login</h1>
+
+            <form method="post">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label class="form-label" asp-for="Input.Email">Email Address</label>
+                    <input asp-for="Input.Email" class="form-control" data-filter="no-angle" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" asp-for="Input.Password">Password</label>
+                    <input asp-for="Input.Password" class="form-control" type="password" data-filter="no-angle" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <input type="hidden" asp-for="Input.RecaptchaToken" />
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+
+                <div>
+                    <a asp-page="/ForgotPassword">Forgot password?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    @if (!string.IsNullOrWhiteSpace(Model.RecaptchaSiteKey))
+    {
+        <script src="https://www.google.com/recaptcha/api.js?render=@Model.RecaptchaSiteKey"></script>
+        <script>
+            grecaptcha.ready(function () {
+                grecaptcha.execute('@Model.RecaptchaSiteKey', { action: 'login' }).then(function (token) {
+                    document.querySelector('[name="Input.RecaptchaToken"]').value = token;
+                });
+            });
+        </script>
+    }
+}

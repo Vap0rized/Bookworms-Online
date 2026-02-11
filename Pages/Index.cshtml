@@ -1,0 +1,33 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="container mt-4">
+    <h1 class="display-5">Welcome</h1>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">Member Profile</h5>
+            <div class="row">
+                <div class="col-md-8">
+                    <p><strong>Name:</strong> @Model.FullName</p>
+                    <p><strong>Email:</strong> @Model.Email</p>
+                    <p><strong>Mobile:</strong> @Model.MobileNo</p>
+                    <p><strong>Billing Address (Encrypted):</strong> @Model.BillingAddressEncrypted</p>
+                    <p><strong>Billing Address (Decrypted):</strong> @Model.BillingAddress</p>
+                    <p><strong>Shipping Address:</strong> @Model.ShippingAddress</p>
+                    <p><strong>Credit Card No (Encrypted):</strong> @Model.CreditCardEncrypted</p>
+                    <p><strong>Credit Card No (Decrypted):</strong> @Model.CreditCardNo</p>
+                </div>
+                <div class="col-md-4">
+                    @if (!string.IsNullOrWhiteSpace(Model.PhotoPath))
+                    {
+                        <img src="@Model.PhotoPath" class="img-fluid rounded" alt="Profile photo" />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
