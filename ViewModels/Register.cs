@@ -28,7 +28,6 @@ namespace Bookworms_Online.ViewModels
 
         [Required]
         [StringLength(200)]
-        [RegularExpression("^[^<>]*$", ErrorMessage = "Angle brackets are not allowed.")]
         public string ShippingAddress { get; set; } = string.Empty;
 
         [Required]
