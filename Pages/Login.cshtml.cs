@@ -141,7 +141,7 @@ namespace Bookworms_Online.Pages
                     new Claim("session_issued", issuedAt.ToUnixTimeSeconds().ToString())
                 });
 
-                if (user.LastPasswordChangedAt.HasValue && user.LastPasswordChangedAt.Value.AddMinutes(999999) < DateTimeOffset.UtcNow)
+                if (user.LastPasswordChangedAt.HasValue && user.LastPasswordChangedAt.Value.AddMinutes(2) < DateTimeOffset.UtcNow)
                 {
                     return RedirectToPage("/ChangePassword");
                 }
