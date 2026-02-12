@@ -98,7 +98,8 @@ app.Use(async (context, next) =>
         {
             if (!context.Request.Path.StartsWithSegments("/Login", StringComparison.OrdinalIgnoreCase) &&
                 !context.Request.Path.StartsWithSegments("/Logout", StringComparison.OrdinalIgnoreCase) &&
-                !context.Request.Path.StartsWithSegments("/SessionConfirm", StringComparison.OrdinalIgnoreCase))
+                !context.Request.Path.StartsWithSegments("/SessionConfirm", StringComparison.OrdinalIgnoreCase) &&
+                !context.Request.Path.StartsWithSegments("/Error", StringComparison.OrdinalIgnoreCase))
             {
                 await context.SignOutAsync();
                 context.Response.Redirect("/Error?statusCode=401&message=You%20were%20signed%20out%20because%20another%20session%20logged%20in.");
