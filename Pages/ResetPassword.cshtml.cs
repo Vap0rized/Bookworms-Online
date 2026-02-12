@@ -3,6 +3,7 @@ using Bookworms_Online.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Linq;
 
 namespace Bookworms_Online.Pages
 {
@@ -61,6 +62,27 @@ namespace Bookworms_Online.Pages
             if (user == null)
             {
                 ModelState.AddModelError(string.Empty, "Invalid user.");
+                return Page();
+            }
+
+            var hasher = _userManager.PasswordHasher;
+            if (!string.IsNullOrWhiteSpace(user.PasswordHash) &&
+                hasher.VerifyHashedPassword(user, user.PasswordHash, Input.NewPassword) == PasswordVerificationResult.Success)
+            {
+                ModelState.AddModelError(string.Empty, "New password cannot match the current password.");
+                return Page();
+            }
+
+            var recentHashes = _dbContext.PasswordHistories
+                .Where(h => h.UserId == user.Id)
+                .OrderByDescending(h => h.ChangedAt)
+                .Take(2)
+                .Select(h => h.PasswordHash)
+                .ToList();
+
+            if (recentHashes.Any(hash => hasher.VerifyHashedPassword(user, hash, Input.NewPassword) == PasswordVerificationResult.Success))
+            {
+                ModelState.AddModelError(string.Empty, "New password cannot match the last 2 passwords.");
                 return Page();
             }
 
